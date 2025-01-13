@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
@@ -5,6 +6,9 @@ const Navbar = () => {
             <div className="navbar bg-base-100">
                 <div className="flex-1">
                     <a className="btn btn-ghost text-xl">daisyUI</a>
+                </div>
+                <div>
+                    <Link to="/login"><button className="btn">Login</button></Link>
                 </div>
                 <div className="flex-none gap-2">
                     <div className="dropdown dropdown-end">
