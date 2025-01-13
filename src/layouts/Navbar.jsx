@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
+import logo from '../assets/images.jpg'
 
 const Navbar = () => {
     return (
         <div>
-            <div className="navbar bg-base-100">
-                <div className="flex-1">
-                    <a className="btn btn-ghost text-xl">daisyUI</a>
+            <div className="navbar bg-base-100 justify-between">
+                <div className="">
+                    <img className="w-10 h-10 rounded-full" src={logo} alt="" />
+                    <h1 className="text-xl ml-2">DropZone</h1>
+                </div>
+                <div>
+                    <Link to='/'>Home</Link>
                 </div>
                 <div>
                     <Link to="/login"><button className="btn">Login</button></Link>

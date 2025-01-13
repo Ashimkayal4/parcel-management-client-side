@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from '../../context/AuthProvider';
+import Swal from 'sweetalert2';
+
 
 const Login = () => {
+    const { signInUser } = useContext(AuthContext);
+
+    const handleSinIn = e => {
+        e.preventDefault()
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        signInUser(email, password)
+            .then(res => {
+                console.log(res);
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Login successful",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            })
+            .catch(err => {
+            console.log(err)
+        })
+    }
     return (
         <div>
            
@@ -21,18 +47,18 @@ const Login = () => {
                             <button className='flex gap-2 text-3xl w-full justify-center items-center border p-2 rounded-md hover:bg-gray-200'><FcGoogle /> Google</button>
                             <div className="divider mt-8">OR</div>
                         </div>
-                        <form className="card-body">
+                        <form onSubmit={handleSinIn} className="card-body">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="email" placeholder="email" className="input input-bordered" required />
+                                <input type="email" name='email' placeholder="email" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" placeholder="password" className="input input-bordered" required />
+                                <input type="password" name='password' placeholder="password" className="input input-bordered" required />
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
