@@ -1,7 +1,28 @@
 import { Link } from "react-router-dom";
 import logo from '../assets/images.jpg'
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+    const { user, signOutUser, setUser } = useContext(AuthContext);
+
+    const logOut = () => {
+        signOutUser()
+            .then(res => {
+                Swal.fire({
+                    position: "top-center",
+                    icon: "error",
+                    title: "LogOut successful",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+                setUser(res.user);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     return (
         <div>
             <div className="navbar bg-base-100 justify-between">
@@ -13,7 +34,14 @@ const Navbar = () => {
                     <Link to='/'>Home</Link>
                 </div>
                 <div>
-                    <Link to="/login"><button className="btn">Login</button></Link>
+
+                    {
+                        user ? <>
+                            <button onClick={logOut} className="btn">LogOut</button>
+                        </> : <>
+                            <Link to="/login"><button className="btn">Login</button></Link>
+                        </>
+                    }
                 </div>
                 <div className="flex-none gap-2">
                     <div className="dropdown dropdown-end">

@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
-    const { createUser, googleSignIn } = useContext(AuthContext);
+    const { createUser, googleSignIn, setUser } = useContext(AuthContext);
 
     const handleCreateUser = e => {
         e.preventDefault()
@@ -16,7 +17,7 @@ const Register = () => {
 
         createUser(email, password)
             .then(res => {
-                console.log(res)
+                setUser(res.user)
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -34,7 +35,7 @@ const Register = () => {
     const handleGoogleLogin = () => {
         googleSignIn()
             .then(res => {
-                console.log(res)
+                setUser(res.user)
                 Swal.fire({
                     position: "top-center",
                     icon: "success",
@@ -94,6 +95,9 @@ const Register = () => {
                                 <button className="btn btn-primary">Register</button>
                             </div>
                         </form>
+                        <div>
+                            <h1 className='pb-4 px-4'>Already have an account ? <Link to='/login' className='text-red-600 font-bold'>Login</Link></h1>
+                        </div>
                     </div>
                 </div>
             </div>

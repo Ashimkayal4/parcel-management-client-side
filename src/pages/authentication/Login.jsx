@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 
 const Login = () => {
-    const { signInUser, googleSignIn } = useContext(AuthContext);
+    const { signInUser, googleSignIn, setUser } = useContext(AuthContext);
 
     const handleSinIn = e => {
         e.preventDefault()
@@ -16,7 +16,7 @@ const Login = () => {
 
         signInUser(email, password)
             .then(res => {
-                console.log(res);
+                setUser(res.user);
                 Swal.fire({
                     position: "top-center",
                     icon: "success",
@@ -33,7 +33,7 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleSignIn()
             .then(res => {
-                console.log(res)
+                setUser(res.user)
                 Swal.fire({
                     position: "top-center",
                     icon: "success",
@@ -85,7 +85,7 @@ const Login = () => {
                             </div>
                         </form>
                         <div>
-                            <h1 className='p-4'>Don't have an account ? <Link to='/register' className='text-red-600 font-bold'>Register</Link></h1>
+                            <h1 className='pb-4 px-4'>Don't have an account ? <Link to='/register' className='text-red-600 font-bold'>Register</Link></h1>
                         </div>
                     </div>
                 </div>
