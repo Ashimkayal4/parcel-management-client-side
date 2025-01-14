@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from '../assets/images.jpg'
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
+import { IoNotificationsSharp } from "react-icons/io5";
 
 const Navbar = () => {
     const { user, signOutUser, setUser } = useContext(AuthContext);
@@ -31,7 +32,10 @@ const Navbar = () => {
                     <h1 className="text-xl ml-2">DropZone</h1>
                 </div>
                 <div>
-                    <Link to='/'>Home</Link>
+                    <Link to='/'><h1 className=" p-2 hover:bg-slate-200 rounded-md font-semibold">Home</h1></Link>
+                </div>
+                <div>
+                    <h1 className="text-2xl"><IoNotificationsSharp/></h1>
                 </div>
                 <div>
 
@@ -57,7 +61,7 @@ const Navbar = () => {
                                 <li>
                                     <a>Profile</a>
                                 </li>
-                                <li><a>Dashboard</a></li>
+                                <li><NavLink to="/dashboard">Dashboard</NavLink></li>
 
                                 <li><button onClick={logOut}>LogOut</button></li>
 

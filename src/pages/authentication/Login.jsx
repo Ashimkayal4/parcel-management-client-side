@@ -69,7 +69,7 @@ const Login = () => {
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                         <div className='px-5 pt-5'>
                             <button onClick={handleGoogleLogin} className='flex gap-2 text-3xl w-full justify-center items-center border p-2 rounded-md hover:bg-gray-200'><FcGoogle /> Google</button>
-                            <div className="divider mt-8">OR</div>
+                            <div className="divider mt-5">Or</div>
                         </div>
                         <form onSubmit={handleSinIn} className="card-body">
                             <div className="form-control">
