@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 
 const Login = () => {
-    const { signInUser } = useContext(AuthContext);
+    const { signInUser, googleSignIn } = useContext(AuthContext);
 
     const handleSinIn = e => {
         e.preventDefault()
@@ -17,6 +17,23 @@ const Login = () => {
         signInUser(email, password)
             .then(res => {
                 console.log(res);
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Login successful",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            })
+            .catch(err => {
+            console.log(err)
+        })
+    }
+
+    const handleGoogleLogin = () => {
+        googleSignIn()
+            .then(res => {
+                console.log(res)
                 Swal.fire({
                     position: "top-center",
                     icon: "success",
@@ -44,7 +61,7 @@ const Login = () => {
                     </div>
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                         <div className='px-5 pt-5'>
-                            <button className='flex gap-2 text-3xl w-full justify-center items-center border p-2 rounded-md hover:bg-gray-200'><FcGoogle /> Google</button>
+                            <button onClick={handleGoogleLogin} className='flex gap-2 text-3xl w-full justify-center items-center border p-2 rounded-md hover:bg-gray-200'><FcGoogle /> Google</button>
                             <div className="divider mt-8">OR</div>
                         </div>
                         <form onSubmit={handleSinIn} className="card-body">
