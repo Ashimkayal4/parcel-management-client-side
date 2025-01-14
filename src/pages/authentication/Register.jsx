@@ -2,10 +2,15 @@ import React, { useContext } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const { createUser, googleSignIn, setUser } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleCreateUser = e => {
         e.preventDefault()
@@ -25,6 +30,7 @@ const Register = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                navigate(from, { replace: true });
             })
             .catch(err => {
                 console.log(err)
@@ -43,6 +49,7 @@ const Register = () => {
                     showConfirmButton: false,
                     timer: 2000,
                 });
+                navigate(from, { replace: true });
             })
             .catch(err => {
                 console.log(err)
