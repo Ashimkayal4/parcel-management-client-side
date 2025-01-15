@@ -17,41 +17,38 @@ const Register = () => {
 
     const handleCreateUser = e => {
         e.preventDefault()
-        const form = e.target;
-        const name = form.name.value;
-        const photo = form.photo.value;
-        const email = form.email.value;
+        const form = e.target
+        const name = form.name.value
+        const photo = form.photo.value
+        const email = form.email.value
         const password = form.password.value;
 
         createUser(email, password)
             .then(res => {
                 const newUser = res.user;
-
                 updatePro({ displayName: name, photoURL: photo })
                     .then(() => {
-
                         const userInfo = {
                             name,
                             email
                         }
+
                         axiosPublic.post('/users', userInfo)
-                            .then(res => {
-                                if (res.data.insertedId) {
-
-                                    Swal.fire({
-                                        position: "top-center",
-                                        icon: "success",
-                                        title: "Registration successful",
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                    navigate(from, { replace: true });
-
-                                    form.reset()
-                                }
+                            .then(() => {
+                                setUser({ ...newUser, displayName: name, photoURL: photo })
+                                Swal.fire({
+                                    position: "top-center",
+                                    icon: "success",
+                                    title: "Registration successful",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                navigate(location?.state ? location.state : '/')
                             })
-                        
-                        setUser({ ...newUser, displayName: name, photoURL: photo })
+
+                    })
+                    .catch(err => {
+                        console.log(err)
                     })
 
             })

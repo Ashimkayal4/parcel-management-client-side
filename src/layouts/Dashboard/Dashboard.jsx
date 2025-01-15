@@ -19,18 +19,18 @@ const Dashboard = () => {
                     isAdmin && <ul className="menu p-4 gap-5">
 
                         <li>
-                            <NavLink to="/dashboard/statistic"> <FcStatistics/>
+                            <NavLink to="/dashboard/adminHome/statistic"> <FcStatistics/>
                                 Statistic
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dashboard/allParcel"> <FaBox/> All parcel</NavLink>
+                            <NavLink to="/dashboard/adminHome/allParcel"> <FaBox/> All parcel</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dashboard/allDeliveryMan"> <CiDeliveryTruck/> All delivery men</NavLink>
+                            <NavLink to="/dashboard/AdminHome/allDeliveryMan"> <CiDeliveryTruck/> All delivery men</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dashboard/allUsers"> <FaUsers/> All users</NavLink>
+                            <NavLink to="/dashboard/adminHome/allUsers"> <FaUsers/> All users</NavLink>
                         </li>
 
                         <div className="divider"></div>
@@ -64,12 +64,12 @@ const Dashboard = () => {
                     !isAdmin && !isDeliveryMen && <ul className="menu p-4 gap-5">
 
                         <li>
-                            <NavLink to="/dashboard/bookParcel"> <MdAddChart/> Book a parcel</NavLink>
+                            <NavLink to="/dashboard/usersHome/bookParcel"> <MdAddChart/> Book a parcel</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dashboard/myParcel"> <BsBoxSeamFill/> My parcel</NavLink>
+                            <NavLink to="/dashboard/usersHome/myParcel"> <BsBoxSeamFill/> My parcel</NavLink>
                         </li>
-                        <li><NavLink to="/dashboard/myProfile"><FaUserCircle/> My profile</NavLink></li>
+                        <li><NavLink to="/dashboard/usersHome/myProfile"><FaUserCircle/> My profile</NavLink></li>
 
 
                         <div className="divider"></div>
