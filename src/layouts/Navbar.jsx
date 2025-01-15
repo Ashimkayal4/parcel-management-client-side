@@ -36,7 +36,7 @@ const Navbar = () => {
                     <Link to='/'><h1 className=" p-2 hover:bg-slate-200 rounded-md font-semibold">Home</h1></Link>
                 </div>
                 <div>
-                    <h1 className="text-2xl"><IoNotificationsSharp /></h1>
+                    <h1><IoNotificationsSharp /></h1>
                 </div>
                 <div>
 

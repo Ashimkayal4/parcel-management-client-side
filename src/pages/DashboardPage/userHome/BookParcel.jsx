@@ -1,10 +1,14 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../../context/AuthProvider";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const BookParcel = () => {
+    const axiosSecure = useAxiosSecure();
+
     const [price, setPrice] = useState(0);
-    const { user } = useContext(AuthContext);
+    const { user } = useAuth();
     const {
         register,
         handleSubmit,
@@ -12,7 +16,7 @@ const BookParcel = () => {
         formState: { errors },
     } = useForm();
 
-    const parcelWeight = watch("parcelWeight"); 
+    const parcelWeight = watch("parcelWeight");
 
     // Automatically calculate price based on parcel weight
     useEffect(() => {
@@ -29,30 +33,38 @@ const BookParcel = () => {
     }, [parcelWeight]);
 
     const onSubmit = (data) => {
-        console.log(data)
-        // const bookingData = {
-        //     ...data,
-        //     price,
-        //     name: user?.displayName,
-        //     email: user?.email,
-        //     status: "pending", 
-        // };
+        const parcelInfo = {
+            name: user.displayName,
+            email: user.email,
+            phone: data.phoneNumber,
+            type: data.parcelType,
+            weight: data.parcelWeight,
+            receiverName: data.receiverName,
+            receiverPhone: data.receiverPhone,
+            address: data.deliveryAddress,
+            date: data.deliveryDate,
+            addressLatitude: data.latitude,
+            addressLongitude: data.longitude,
+            price: price
 
-        // Store booking data in MongoDB
-        // fetch("", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(bookingData),
-        // })
-        //     .then((response) => response.json())
-        //     .then((result) => {
-        //         console.log("Booking Successful:", result);
-        //         alert("Parcel booked successfully!");
-        //     })
-        //     .catch((error) => {
-        //         console.error("Error booking parcel:", error);
-        //         alert("Failed to book parcel. Please try again.");
-        //     });
+        }
+
+        axiosSecure.post('/parcels', parcelInfo)
+            .then(res => {
+                console.log(res.data)
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "parcel added successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+
+
+        console.log(parcelInfo)
+
+
     };
 
     return (
@@ -246,7 +258,7 @@ const BookParcel = () => {
                     </div>
 
                     {/* Submit Button */}
-                    <div className="form-control mt-6">
+                    <div className="form-control mt-6 col-span-2">
                         <button type="submit" className="btn btn-primary">
                             Book Parcel
                         </button>

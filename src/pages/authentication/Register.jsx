@@ -90,10 +90,11 @@ const Register = () => {
                     </div>
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                         <div className='px-5 pt-5'>
-                            <button onClick={handleGoogleLogin} className='flex gap-2 text-3xl w-full justify-center items-center border p-2 rounded-md hover:bg-gray-200'><FcGoogle /> Google</button>
-                            <div className="divider mt-8">Or</div>
+                            <button onClick={handleGoogleLogin} className='text-3xl w-full btn btn-outline'><FcGoogle /> Google</button>
+                            
+                            <div className="divider mt-5">or</div>
                         </div>
-                        <form onSubmit={handleCreateUser} className="card-body">
+                        <form onSubmit={handleCreateUser} className="px-6">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name</span>
