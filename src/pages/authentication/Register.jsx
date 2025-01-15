@@ -3,9 +3,12 @@ import { FcGoogle } from 'react-icons/fc';
 import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const Register = () => {
-    const { createUser, googleSignIn, setUser } = useContext(AuthContext);
+    const { createUser, googleSignIn, setUser, updatePro } = useContext(AuthContext);
+
+    const axiosPublic = useAxiosPublic()
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,15 +25,35 @@ const Register = () => {
 
         createUser(email, password)
             .then(res => {
-                setUser(res.user)
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "registration successful",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate(from, { replace: true });
+                const newUser = res.user;
+
+                updatePro({ displayName: name, photoURL: photo })
+                    .then(() => {
+
+                        const userInfo = {
+                            name,
+                            email
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+
+                                    Swal.fire({
+                                        position: "top-center",
+                                        icon: "success",
+                                        title: "Registration successful",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate(from, { replace: true });
+
+                                    form.reset()
+                                }
+                            })
+                        
+                        setUser({ ...newUser, displayName: name, photoURL: photo })
+                    })
+
             })
             .catch(err => {
                 console.log(err)

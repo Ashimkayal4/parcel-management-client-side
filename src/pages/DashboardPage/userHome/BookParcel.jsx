@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../context/AuthProvider";
+import { AuthContext } from "../../../context/AuthProvider";
 
 const BookParcel = () => {
     const [price, setPrice] = useState(0);
@@ -30,14 +30,36 @@ const BookParcel = () => {
 
     const onSubmit = (data) => {
         console.log(data)
+        // const bookingData = {
+        //     ...data,
+        //     price,
+        //     name: user?.displayName,
+        //     email: user?.email,
+        //     status: "pending", 
+        // };
 
+        // Store booking data in MongoDB
+        // fetch("", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify(bookingData),
+        // })
+        //     .then((response) => response.json())
+        //     .then((result) => {
+        //         console.log("Booking Successful:", result);
+        //         alert("Parcel booked successfully!");
+        //     })
+        //     .catch((error) => {
+        //         console.error("Error booking parcel:", error);
+        //         alert("Failed to book parcel. Please try again.");
+        //     });
     };
 
     return (
         <div>
             <div className="card bg-base-100 w-full shrink-0 shadow-2xl">
                 <h1 className="text-4xl flex justify-center mt-4">Book a Parcel</h1>
-                <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+                <form onSubmit={handleSubmit(onSubmit)} className="card-body grid grid-cols-2">
                     {/* User Name */}
                     <div className="form-control">
                         <label className="label">
