@@ -15,6 +15,8 @@ import Statistic from "../pages/DashboardPage/adminHome/Statistic";
 import AllParcel from "../pages/DashboardPage/adminHome/AllParcel";
 import AllDeliveryMen from "../pages/DashboardPage/adminHome/AllDeliveryMen";
 import AllUsers from "../pages/DashboardPage/adminHome/AllUsers";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoutes from "./AdminRoutes";
 
 
 
@@ -39,7 +41,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
         
             // users links
@@ -70,19 +72,19 @@ export const router = createBrowserRouter([
             // admin related links
             {
                 path: '/dashboard/adminHome/statistic',
-                element:<Statistic></Statistic>
+                element: <AdminRoutes><Statistic></Statistic></AdminRoutes>
             },
             {
                 path: '/dashboard/adminHome/allParcel',
-                element: <AllParcel></AllParcel>
+                element: <AdminRoutes><AllParcel></AllParcel></AdminRoutes>
             },
             {
                 path: '/dashboard/AdminHome/allDeliveryMan',
-                element:<AllDeliveryMen></AllDeliveryMen>
+                element: <AdminRoutes><AllDeliveryMen></AllDeliveryMen></AdminRoutes>
             },
             {
                 path: '/dashboard/adminHome/allUsers',
-                element:<AllUsers></AllUsers>
+                element: <AdminRoutes><AllUsers></AllUsers></AdminRoutes>
             }
         ]
     }

@@ -4,10 +4,12 @@ import { FaBox, FaHome, FaListUl, FaUserCircle, FaUsers } from "react-icons/fa";
 import { FcRating, FcStatistics } from "react-icons/fc";
 import { MdAddChart } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../../hooks/useAdmin";
 
 const Dashboard = () => {
 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
+    console.log(isAdmin,'is admin check')
     const isDeliveryMen = false;
 
 
