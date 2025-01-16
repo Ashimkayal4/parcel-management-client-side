@@ -18,20 +18,69 @@ const AllUsers = () => {
 
     // make admin from a normal user
     const handleMakeAdmin = (user) => {
-        axiosSecure.patch(`users/admin/${user._id}`)
-            .then(res => {
-                console.log(res.data)
-                if (res.data.modifiedCount > 0) {
-                    refetch()
-                    Swal.fire({
-                        position: "top-center",
-                        icon: "success",
-                        title: "Make admin successful",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
+        Swal.fire({
+            title: "Are you sure?",
+            text: `Do you want to make Admin ${user?.name} ?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes make Admin ${user?.name}`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`users/admin/${user._id}`)
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.modifiedCount > 0) {
+                            refetch()
+                            Swal.fire({
+                                position: "top-center",
+                                icon: "success",
+                                title: "Make admin successful",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    })
+
+            }
+        });
+   
+    }
+
+    // make delivery man
+    const handleMakeDeliveryMan = (user) => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: `Do you want to make ${user?.name} a delivery man ?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes make ${user?.name} a delivery man`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`users/deliverMan/${user._id}`)
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.modifiedCount > 0) {
+                            refetch()
+                            Swal.fire({
+                                position: "top-center",
+                                icon: "success",
+                                title: ` ${user} make delivery man successfully`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    })
+            }
+        });
+
+
+
+   
     }
 
 
@@ -62,11 +111,14 @@ const AllUsers = () => {
                                 <td className="border border-gray-300 px-4 py-2">{user.phoneNumber || 'N/A'}</td>
                                 <td className="border border-gray-300 px-4 py-2">{user.parcelsBooked || 0}</td>
                                 <td className="border border-gray-300 px-4 py-2">
-                                    <button
-                                        onClick={() => handleMakeDeliveryMan(user)}
-                                        className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600">
-                                        Make Delivery Man
-                                    </button>
+
+                                    {
+                                        user.role === 'deliveryMen' ? <button className='mr-3'>Delivery Man</button> : <button
+                                            onClick={() => handleMakeDeliveryMan(user)}
+                                            className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600">
+                                            Make Delivery Man
+                                        </button>
+                                    }
 
                                     {
                                         user.role === "admin" ? 'Admin' : <button

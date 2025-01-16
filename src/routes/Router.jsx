@@ -79,7 +79,7 @@ export const router = createBrowserRouter([
                 element: <AdminRoutes><AllParcel></AllParcel></AdminRoutes>
             },
             {
-                path: '/dashboard/AdminHome/allDeliveryMan',
+                path: '/dashboard/adminHome/allDeliveryMen',
                 element: <AdminRoutes><AllDeliveryMen></AllDeliveryMen></AdminRoutes>
             },
             {
