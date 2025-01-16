@@ -5,7 +5,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 const AllDeliveryMen = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: deliveryMen = [], isLoading, isError, error } = useQuery({
+    const { data: deliveryMen = [], } = useQuery({
         queryKey: ['deliveryMen'],
         queryFn: async () => {
             const res = await axiosSecure.get('/deliveryMen');
@@ -13,8 +13,6 @@ const AllDeliveryMen = () => {
         }
     });
 
-    if (isLoading) return <p>Loading...</p>;
-    if (isError) return <p>Error: {error.message}</p>;
 
     return (
         <div className="p-4">

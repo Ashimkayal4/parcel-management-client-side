@@ -6,10 +6,13 @@ import { FcRating, FcStatistics } from "react-icons/fc";
 import { MdAddChart } from "react-icons/md";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAdmin from "../../hooks/useAdmin";
+import useDeliveryMen from "../../hooks/useDeliveryMen";
 
 const Dashboard = () => {
     const [isAdmin] = useAdmin();
-    const isDeliveryMen = false; //TODO : get actual delivery man
+
+    const [isDeliveryMen] = useDeliveryMen();
+    
     const navigate = useNavigate();
 
     useEffect(() => {
