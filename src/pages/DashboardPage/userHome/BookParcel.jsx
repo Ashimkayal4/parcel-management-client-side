@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const BookParcel = () => {
     const axiosSecure = useAxiosSecure();
-
+    const navigate = useNavigate()
+    
     const [price, setPrice] = useState(0);
     const { user } = useAuth();
     const {
@@ -50,8 +52,7 @@ const BookParcel = () => {
         }
 
         axiosSecure.post('/parcels', parcelInfo)
-            .then(res => {
-                console.log(res.data)
+            .then(() => {
                 Swal.fire({
                     position: "top-center",
                     icon: "success",
@@ -59,11 +60,8 @@ const BookParcel = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+              
             })
-
-
-        console.log(parcelInfo)
-
 
     };
 

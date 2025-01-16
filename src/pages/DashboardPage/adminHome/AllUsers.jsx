@@ -8,85 +8,86 @@ const AllUsers = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 4;
 
-    const { data: users = [],refetch } = useQuery({
+    // Fetch all users
+    const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
             return res.data;
-        }
+        },
     });
 
-    // make admin from a normal user
+    // Fetch all parcels
+    const { data: parcels = [] } = useQuery({
+        queryKey: ['parcels'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/parcels');
+            return res.data;
+        },
+    });
+
+    //  users parcels booked count
+    const usersWithParcels = users.map((user) => {
+        const parcelsBooked = parcels.filter((parcel) => parcel.email === user.email).length;
+        return { ...user, parcelsBooked };
+    });
+
+    // Handle making a user an admin
     const handleMakeAdmin = (user) => {
         Swal.fire({
-            title: "Are you sure?",
-            text: `Do you want to make Admin ${user?.name} ?`,
-            icon: "warning",
+            title: 'Are you sure?',
+            text: `Do you want to make ${user.name} an Admin?`,
+            icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: `Yes make Admin ${user?.name}`
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: `Yes, make Admin`,
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`users/admin/${user._id}`)
-                    .then(res => {
-                        console.log(res.data)
-                        if (res.data.modifiedCount > 0) {
-                            refetch()
-                            Swal.fire({
-                                position: "top-center",
-                                icon: "success",
-                                title: "Make admin successful",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
-                    })
-
+                axiosSecure.patch(`users/admin/${user._id}`).then((res) => {
+                    if (res.data.modifiedCount > 0) {
+                        refetch();
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${user.name} is now an Admin.`,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                });
             }
         });
-   
-    }
+    };
 
-    // make delivery man
+    // Handle making a user a delivery man
     const handleMakeDeliveryMan = (user) => {
-
         Swal.fire({
-            title: "Are you sure?",
-            text: `Do you want to make ${user?.name} a delivery man ?`,
-            icon: "warning",
+            title: 'Are you sure?',
+            text: `Do you want to make ${user.name} a Delivery Man?`,
+            icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: `Yes make ${user?.name} a delivery man`
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: `Yes, make Delivery Man`,
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`users/deliverMan/${user._id}`)
-                    .then(res => {
-                        console.log(res.data)
-                        if (res.data.modifiedCount > 0) {
-                            refetch()
-                            Swal.fire({
-                                position: "top-center",
-                                icon: "success",
-                                title: ` ${user} make delivery man successfully`,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
-                    })
+                axiosSecure.patch(`users/deliverMan/${user._id}`).then((res) => {
+                    if (res.data.modifiedCount > 0) {
+                        refetch();
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${user.name} is now a Delivery Man.`,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                });
             }
         });
+    };
 
-
-
-   
-    }
-
-
-
-
-    const paginatedUsers = users.slice(
+    // Paginate users for the current page
+    const paginatedUsers = usersWithParcels.slice(
         (currentPage - 1) * usersPerPage,
         currentPage * usersPerPage
     );
@@ -105,30 +106,33 @@ const AllUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {paginatedUsers.map(user => (
+                        {paginatedUsers.map((user) => (
                             <tr key={user._id} className="text-center">
                                 <td className="border border-gray-300 px-4 py-2">{user.name}</td>
                                 <td className="border border-gray-300 px-4 py-2">{user.phoneNumber || 'N/A'}</td>
-                                <td className="border border-gray-300 px-4 py-2">{user.parcelsBooked || 0}</td>
+                                <td className="border border-gray-300 px-4 py-2">{user.parcelsBooked}</td>
                                 <td className="border border-gray-300 px-4 py-2">
-
-                                    {
-                                        user.role === 'deliveryMen' ? <button className='mr-3'>Delivery Man</button> : <button
+                                    {user.role === 'deliveryMen' ? (
+                                        <button className="mr-3">Delivery Man</button>
+                                    ) : (
+                                        <button
                                             onClick={() => handleMakeDeliveryMan(user)}
-                                            className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600">
+                                            className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600"
+                                        >
                                             Make Delivery Man
                                         </button>
-                                    }
+                                    )}
 
-                                    {
-                                        user.role === "admin" ? 'Admin' : <button
+                                    {user.role === 'admin' ? (
+                                        <span>Admin</span>
+                                    ) : (
+                                        <button
                                             onClick={() => handleMakeAdmin(user)}
-                                            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+                                            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                                        >
                                             Make Admin
                                         </button>
-                                        
-                                    }
-
+                                    )}
                                 </td>
                             </tr>
                         ))}
@@ -136,7 +140,7 @@ const AllUsers = () => {
                 </table>
             </div>
             <div className="flex justify-center mt-4">
-                {Array.from({ length: Math.ceil(users.length / usersPerPage) }, (_, index) => index + 1).map(pageNumber => (
+                {Array.from({ length: Math.ceil(usersWithParcels.length / usersPerPage) }, (_, index) => index + 1).map((pageNumber) => (
                     <button
                         key={pageNumber}
                         onClick={() => setCurrentPage(pageNumber)}

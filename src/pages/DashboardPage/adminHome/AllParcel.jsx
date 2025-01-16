@@ -28,26 +28,7 @@ const AllParcel = () => {
     });
 
     const handleAssign = async () => {
-        if (!selectedParcel || !deliveryMen || !approximateDate) return;
-
-        try {
-            const response = await axiosSecure.put(`/parcels/${selectedParcel._id}`, {
-                status: 'On The Way',
-                deliveryMenId: deliveryMen,
-                approximateDeliveryDate: approximateDate,
-            });
-
-            if (response.data.modifiedCount > 0) {
-                alert('Parcel updated successfully!');
-                refetch(); // Refresh the data
-                setSelectedParcel(null); // Close the modal
-                setDeliveryMen([]);
-                setApproximateDate("");
-            }
-        } catch (error) {
-            console.error('Error updating parcel:', error);
-            alert('Failed to update the parcel. Please try again.');
-        }
+        
     };
 
     return (
