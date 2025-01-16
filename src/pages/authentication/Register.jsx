@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import useAuth from '../../hooks/useAuth';
 
 const Register = () => {
-    const { createUser, googleSignIn, setUser, updatePro } = useContext(AuthContext);
+    const { createUser, googleSignIn, setUser, updatePro, user } = useAuth();
 
     const axiosPublic = useAxiosPublic()
 
@@ -19,9 +18,11 @@ const Register = () => {
         e.preventDefault()
         const form = e.target
         const photo = form.photo.value
-        const name = form.name.value
+        const name = form.name.value;
+        const phone = form.phone.value;
         const email = form.email.value
         const password = form.password.value;
+        const role = form.role.value;
 
         createUser(email, password)
             .then(res => {
@@ -31,7 +32,9 @@ const Register = () => {
                         const userInfo = {
                             name,
                             email,
-                            photo
+                            photo,
+                            phone,
+                            role
                         }
 
                         axiosPublic.post('/users', userInfo)
@@ -58,19 +61,32 @@ const Register = () => {
             })
     }
 
-
     const handleGoogleLogin = () => {
         googleSignIn()
             .then(res => {
-                setUser(res.user)
-                Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Login successful",
-                    showConfirmButton: false,
-                    timer: 2000,
-                });
-                navigate(from, { replace: true });
+                setUser(res.user);
+
+                const loggedInUser = res.user;
+                const userInfo = {
+                    name: loggedInUser.displayName,
+                    email: loggedInUser.email,
+                    photo: loggedInUser.photoURL,
+                    role: 'user',
+                };
+
+                axiosPublic.post('/users', userInfo)
+                    .then(() => {
+                        Swal.fire({
+                            position: "top-center",
+                            icon: "success",
+                            title: "Login successful",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        navigate(from, { replace: true });
+                })
+                
+            
             })
             .catch(err => {
                 console.log(err)
@@ -108,6 +124,24 @@ const Register = () => {
                                 </label>
                                 <input type="text" name='photo' placeholder="photo url" className="input input-bordered" required />
                             </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Role</span>
+                                </label>
+                                <select name="role" className="input input-bordered">
+                                    <option value="user">user</option>
+                                    <option value="deliveryMen">delivery Man</option>
+                                </select>
+                            </div>
+
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Phone Number</span>
+                                </label>
+                                <input type="text" name='phone' placeholder="phone" className="input input-bordered" required />
+                            </div>
+
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>

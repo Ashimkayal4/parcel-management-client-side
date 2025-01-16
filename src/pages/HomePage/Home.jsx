@@ -1,6 +1,7 @@
 import React from 'react';
 import Banner from './Banner';
 import OurFeatures from './OurFeatures';
+import ActionCard from './ActionCard';
 
 const Home = () => {
     return (
@@ -9,6 +10,8 @@ const Home = () => {
             <Banner></Banner>
 
             <OurFeatures></OurFeatures>
+
+            <ActionCard></ActionCard>
             
         </div>
     );

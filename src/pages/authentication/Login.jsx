@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
-import { AuthContext } from '../../context/AuthProvider';
 import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 
 const Login = () => {
-    const { signInUser, googleSignIn, setUser } = useContext(AuthContext);
+    const { signInUser, googleSignIn, setUser } = useAuth();
+    const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -32,32 +33,44 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
             .catch(err => {
-            console.log(err)
-        })
+                console.log(err)
+            })
     }
 
     const handleGoogleLogin = () => {
         googleSignIn()
             .then(res => {
                 setUser(res.user)
-                Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Login successful",
-                    showConfirmButton: false,
-                    timer: 2000,
-                });
-                navigate(from, { replace: true });
+
+                const loggedInUser = res.user;
+                const userInfo = {
+                    name: loggedInUser.displayName,
+                    email: loggedInUser.email,
+                    photo: loggedInUser.photoURL,
+                    role: 'user',
+                };
+
+                axiosPublic.post('/users', userInfo)
+                    .then(() => {
+                        Swal.fire({
+                            position: "top-center",
+                            icon: "success",
+                            title: "Login successful",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                        navigate(from, { replace: true });
+                    })
             })
             .catch(err => {
-            console.log(err)
-        })
+                console.log(err)
+            })
     }
     return (
         <div>
-           
+
             <div className="hero bg-base-200 min-h-screen">
-              
+
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
                         <h1 className="text-5xl font-bold">Login now!</h1>
