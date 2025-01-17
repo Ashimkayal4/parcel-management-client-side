@@ -17,6 +17,7 @@ import AllDeliveryMen from "../pages/DashboardPage/adminHome/AllDeliveryMen";
 import AllUsers from "../pages/DashboardPage/adminHome/AllUsers";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoutes from "./AdminRoutes";
+import UpdateParcel from "../pages/DashboardPage/userHome/UpdateParcel";
 
 
 
@@ -85,6 +86,14 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/adminHome/allUsers',
                 element: <AdminRoutes><AllUsers></AllUsers></AdminRoutes>
+            },
+
+
+            // local routes
+            {
+                path: '/dashboard/update/:id',
+                element: <UpdateParcel></UpdateParcel>,
+                loader: ({ params }) => fetch(`http://localhost:5000/updateParcel/${params.id}`)
             }
         ]
     }

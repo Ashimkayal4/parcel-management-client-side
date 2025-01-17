@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const ActionCard = () => {
-    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
 
     const { data: parcels = [], } = useQuery({
         queryKey: ['parcels'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/parcels');
+            const res = await axiosPublic.get('/parcels');
             return res.data;
         }
     });
@@ -16,7 +16,7 @@ const ActionCard = () => {
     const { data: users = [], } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/users');
+            const res = await axiosPublic.get('/users');
             return res.data;
         },
     });
@@ -32,7 +32,7 @@ const ActionCard = () => {
                             <div className="text-lg font-semibold text-gray-900">
                                 <h3 className="text-2xl">Total Parcels Booked</h3>
                             </div>
-                            <p className="text-2xl">{parcels.length}</p>
+                            <p className="text-3xl font-bold">{parcels.length}</p>
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@ const ActionCard = () => {
                             <div className="text-lg font-semibold text-gray-900">
                                 <h3 className="text-2xl">Total Parcels Delivered</h3>
                             </div>
-                            <p className="text-2xl"></p>
+                            <p className="text-3xl font-bold"></p>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@ const ActionCard = () => {
                             <div className="text-lg font-semibold text-gray-900">
                                 <h3 className="text-2xl">Total Users</h3>
                             </div>
-                            <p className="text-2xl">{users.length}</p>
+                            <p className="text-3xl font-bold">{users.length}</p>
                         </div>
                     </div>
                 </div>

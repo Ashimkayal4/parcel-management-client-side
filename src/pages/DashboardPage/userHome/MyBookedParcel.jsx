@@ -2,13 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useAuth from '../../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 const MyBookedParcel = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [filterStatus, setFilterStatus] = useState('all');
 
-    const { data: parcels = [], refetch } = useQuery({
+    const { data: parcels = [], } = useQuery({
         queryKey: ['parcels', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/parcels/users/${user?.email}`);
@@ -22,13 +23,11 @@ const MyBookedParcel = () => {
             ? parcels
             : parcels.filter((parcel) => parcel.status === filterStatus);
 
-    const handleCancel =  (id) => {
-    
-    };
+
 
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">My Parcels : { parcels.length}</h2>
+            <h2 className="text-xl font-bold mb-4">My Parcels : {parcels.length}</h2>
             {/* Filter Section */}
             <div className="mb-4">
                 <label className="mr-2">Filter by Status:</label>
@@ -69,42 +68,30 @@ const MyBookedParcel = () => {
                             <td className="border border-gray-300 p-2">{parcel.deliveryMenId || 'Not Assigned'}</td>
                             <td className="border border-gray-300 p-2">{parcel.status}</td>
                             <td className="border border-gray-300 p-2 space-x-2">
+
                                 {/* Update Button */}
-                                <button
-                                    className={`px-2 py-1 text-white rounded ${parcel.status === 'pending' ? 'bg-blue-500' : 'bg-gray-400 cursor-not-allowed'
-                                        }`}
-                                    disabled={parcel.status !== 'pending'}
-                                    onClick={() => window.location.assign(`/update-booking/${parcel._id}`)}
-                                >
-                                    Update
-                                </button>
+
+                                <Link to={`/dashboard/update/${parcel._id}`}>
+                                    <button className='btn btn-primary mb-3 ml-2'>
+                                        Update
+                                    </button>
+                                </Link>
 
                                 {/* Cancel Button */}
-                                <button
-                                    className={`px-2 py-1 text-white rounded ${parcel.status === 'pending' ? 'bg-red-500' : 'bg-gray-400 cursor-not-allowed'
-                                        }`}
-                                    disabled={parcel.status !== 'pending'}
-                                    onClick={() => handleCancel(parcel._id)}
-                                >
+                                <button className='btn btn-error' onClick={() => handleCancel(parcel._id)}>
                                     Cancel
                                 </button>
 
                                 {/* Review Button */}
                                 {parcel.status === 'delivered' && (
-                                    <button
-                                        className="px-2 py-1 bg-green-500 text-white rounded"
-                                        onClick={() => window.location.assign(`/review/${parcel._id}`)}
-                                    >
+                                    <button>
                                         Review
                                     </button>
                                 )}
 
                                 {/* Pay Button */}
                                 {parcel.status === 'pending' && (
-                                    <button
-                                        className="px-2 py-1 bg-yellow-500 text-white rounded"
-                                        onClick={() => window.location.assign(`/pay/${parcel._id}`)}
-                                    >
+                                    <button>
                                         Pay
                                     </button>
                                 )}

@@ -61,6 +61,7 @@ const BookParcel = () => {
                     timer: 1500
                 });
               
+                navigate('/dashboard/usersHome/myParcel')
             })
 
     };

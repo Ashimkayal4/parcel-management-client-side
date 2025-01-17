@@ -83,6 +83,12 @@ const Dashboard = () => {
                 {!isAdmin && !isDeliveryMen && (
                     <ul className="menu p-4 gap-5">
                         <li>
+                            <NavLink to="/dashboard/usersHome/myProfile">
+                                <FaUserCircle /> My profile
+                            </NavLink>
+                        </li>
+
+                        <li>
                             <NavLink to="/dashboard/usersHome/bookParcel">
                                 <MdAddChart /> Book a parcel
                             </NavLink>
@@ -90,11 +96,6 @@ const Dashboard = () => {
                         <li>
                             <NavLink to="/dashboard/usersHome/myParcel">
                                 <BsBoxSeamFill /> My parcel
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/dashboard/usersHome/myProfile">
-                                <FaUserCircle /> My profile
                             </NavLink>
                         </li>
                         <div className="divider"></div>
