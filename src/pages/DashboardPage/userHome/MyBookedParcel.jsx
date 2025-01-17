@@ -78,7 +78,7 @@ const MyBookedParcel = () => {
                                 </Link>
 
                                 {/* Cancel Button */}
-                                <button className='btn btn-error' onClick={() => handleCancel(parcel._id)}>
+                                <button>
                                     Cancel
                                 </button>
 

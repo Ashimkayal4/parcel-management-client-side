@@ -26,14 +26,14 @@ const Navbar = () => {
     }
     return (
 
-        <div className="navbar bg-base-100 justify-between">
+        <div className="navbar fixed z-10 bg-opacity-30 w-11/12 bg-base-100 justify-between">
             <div className="">
                 <img className="w-10 h-10 rounded-full" src={logo} alt="" />
                 <h1 className="text-xl ml-2">DropZone</h1>
             </div>
             <div className="flex gap-5">
                 <div>
-                    <Link to='/'><h1 className=" p-2 hover:bg-slate-200 rounded-md font-semibold">Home</h1></Link>
+                    <Link to='/'><h1 className=" p-2 text-black rounded-md font-semibold">Home</h1></Link>
                 </div>
                 <div>
                     <h1><IoNotificationsSharp /></h1>

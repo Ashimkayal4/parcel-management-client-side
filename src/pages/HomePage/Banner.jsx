@@ -1,9 +1,23 @@
 import React from 'react';
+import parcelLottie from '../../assets/lottie/parcel.json';
+import Lottie from 'lottie-react';
 
 const Banner = () => {
     return (
-        <div className="relative bg-cover bg-center h-screen flex items-center justify-center text-white bg-banner">
-            <div className="absolute inset-0 bg-gray-800 bg-opacity-50"></div>
+        <div className="relative bg-cover bg-center h-screen flex items-center justify-center text-black">
+            <div className="absolute inset-0 pointer-events-none">
+                <Lottie
+                    animationData={parcelLottie}
+                    loop
+                    autoplay
+                    className="w-full h-full object-cover opacity-70 transform translate-y-20"
+                />
+            </div>
+
+            {/* Overlay for Dim Effect */}
+            <div className="absolute inset-0 bg-gray-800 bg-opacity-10"></div>
+
+            {/* Foreground Content */}
             <div className="z-10 text-center px-6 md:px-12 max-w-4xl">
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
                     Reliable Parcel Management at Your Fingertips
@@ -23,7 +37,6 @@ const Banner = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 

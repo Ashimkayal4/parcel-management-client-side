@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BsBoxSeamFill } from "react-icons/bs";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaBox, FaHome, FaListUl, FaUserCircle, FaUsers } from "react-icons/fa";
@@ -9,21 +9,29 @@ import useAdmin from "../../hooks/useAdmin";
 import useDeliveryMen from "../../hooks/useDeliveryMen";
 
 const Dashboard = () => {
-    const [isAdmin] = useAdmin();
+    const [isAdmin, isAdminLoading] = useAdmin();
+    const [isDeliveryMen, isDeliveryMenLoading] = useDeliveryMen();
+    const [loading, setLoading] = useState(true);
 
-    const [isDeliveryMen] = useDeliveryMen();
-    
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isAdmin) {
-            navigate("/dashboard/adminHome/statistic");
-        } else if (isDeliveryMen) {
-            navigate("/dashboard/deliverHome/myDeliveryList");
-        } else {
-            navigate("/dashboard/usersHome/myProfile");
+        if (!isAdminLoading && !isDeliveryMenLoading) {
+            if (isAdmin) {
+                navigate("/dashboard/adminHome/statistic");
+            } else if (isDeliveryMen) {
+                navigate("/dashboard/deliverHome/myDeliveryList");
+            } else {
+                navigate("/dashboard/usersHome/myProfile");
+            }
+            setLoading(false); 
         }
-    }, [isAdmin, isDeliveryMen, navigate]);
+    }, [isAdmin, isDeliveryMen, isAdminLoading, isDeliveryMenLoading, navigate]);
+
+    
+    if (loading) {
+        return <progress className="progress w-56"></progress>
+    }
 
     return (
         <div className="w-11/12 mx-auto flex">
