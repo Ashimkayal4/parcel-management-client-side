@@ -44,7 +44,8 @@ const AllUsers = () => {
             confirmButtonText: `Yes, make Admin`,
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`users/admin/${user._id}`).then((res) => {
+                axiosSecure.patch(`users/admin/${user._id}`)
+                    .then((res) => {
                     if (res.data.modifiedCount > 0) {
                         refetch();
                         Swal.fire({
@@ -71,7 +72,8 @@ const AllUsers = () => {
             confirmButtonText: `Yes, make Delivery Man`,
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`users/deliverMan/${user._id}`).then((res) => {
+                axiosSecure.patch(`users/deliverMan/${user._id}`)
+                    .then((res) => {
                     if (res.data.modifiedCount > 0) {
                         refetch();
                         Swal.fire({

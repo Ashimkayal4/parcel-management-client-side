@@ -116,7 +116,7 @@ const Dashboard = () => {
                 )}
             </div>
 
-            <div className="flex-1">
+            <div className="flex-1 ">
                 <Outlet />
             </div>
         </div>

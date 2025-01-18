@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const AllParcel = () => {
     const axiosSecure = useAxiosSecure();
     const [selectedParcel, setSelectedParcel] = useState(null);
-    const [deliveryMen, setDeliveryMen] = useState([]);
-    const [approximateDate, setApproximateDate] = useState("");
 
     // Fetch parcels data
     const { data: parcels = [], refetch } = useQuery({
@@ -18,18 +17,53 @@ const AllParcel = () => {
     });
 
     // Fetch delivery men data for the modal dropdown
-    const { data: deliveryMenList = [] } = useQuery({
-        queryKey: ['deliveryMen'],
+    const { data: deliveryMenList = [], } = useQuery({
+        queryKey: ['deliveryMenList'],
         queryFn: async () => {
             const res = await axiosSecure.get('/deliveryMen');
-            setDeliveryMen(res.data);
             return res.data;
         }
     });
+   
 
-    const handleAssign = async () => {
-        
-    };
+    const { _id ,} = selectedParcel || {};
+
+    const handleSelectDeliveryMen = e => {
+        e.preventDefault()
+        const form = e.target;
+        const date = form.date.value;
+        const deliveryMenId = form.deliveryId.value;
+        const selectInfo = {
+            deliveryMenId,
+            date,
+        }
+
+        axiosSecure.patch(`/update/deliver/${_id}`, selectInfo)
+            .then(() => {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Do you want select this delivery person?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes,I want"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Confirmed!",
+                            text: "Delivery man assign successfully",
+                            icon: "success"
+                        });
+
+                        refetch()
+
+                        setSelectedParcel(null);
+                    }
+                });
+            
+            })
+    }
 
     return (
         <div className="p-4">
@@ -55,14 +89,16 @@ const AllParcel = () => {
                                 <td className="border border-gray-300 px-4 py-2">{parcel.date}</td>
                                 <td className="border border-gray-300 px-4 py-2">{parcel.receiverName}</td>
                                 <td className="border border-gray-300 px-4 py-2">${parcel.price}</td>
-                                <td className="border border-gray-300 px-4 py-2">{parcel.status || "Pending"}</td>
+                                <td className={`border border-gray-300 px-4 py-2 font-semibold ${parcel.status === 'pending' ? 'text-red-500':'text-black'}`}>
+                                    {parcel.status}
+                                </td>
                                 <td className="border border-gray-300 px-4 py-2">
-                                    <button
-                                        className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
-                                        onClick={() => setSelectedParcel(parcel)}
-                                    >
+
+                                    <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
+                                        onClick={() => setSelectedParcel(parcel)}>
                                         Manage
                                     </button>
+                                 
                                 </td>
                             </tr>
                         ))}
@@ -73,16 +109,14 @@ const AllParcel = () => {
             {/* Modal */}
             {selectedParcel && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded shadow-lg w-11/12 sm:w-96">
+                    <form onSubmit={handleSelectDeliveryMen} className="bg-white p-6 rounded shadow-lg w-11/12 sm:w-96">
                         <h2 className="text-lg font-bold mb-4">Manage Parcel</h2>
                         <p className="mb-2"><strong>Parcel ID:</strong> {selectedParcel._id}</p>
 
                         <label className="block mb-2 font-semibold">Assign Delivery Man:</label>
-                        <select
-                            className="w-full p-2 border rounded mb-4"
-                            onChange={(e) => setDeliveryMen(e.target.value)}
-                        >
-                            <option value="">Select a delivery man</option>
+                        <select name='deliveryId'
+                            className="w-full p-2 border rounded mb-4" >
+                            <option>Select a delivery man</option>
                             {deliveryMenList.map((man) => (
                                 <option key={man._id} value={man._id}>
                                     {man.name}
@@ -93,26 +127,21 @@ const AllParcel = () => {
                         <label className="block mb-2 font-semibold">Approximate Delivery Date:</label>
                         <input
                             type="date"
+                            name='date'
                             className="w-full p-2 border rounded mb-4"
-                            value={approximateDate}
-                            onChange={(e) => setApproximateDate(e.target.value)}
+                            required
                         />
 
                         <div className="flex justify-end gap-2">
-                            <button
-                                className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-700"
-                                onClick={() => setSelectedParcel(null)}
-                            >
+                            <button className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-700"
+                                onClick={() => setSelectedParcel(null)}>
                                 Cancel
                             </button>
-                            <button
-                                className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700"
-                                onClick={handleAssign}
-                            >
+                            <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700" >
                                 Assign
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             )}
         </div>

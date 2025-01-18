@@ -47,7 +47,8 @@ const BookParcel = () => {
             date: data.deliveryDate,
             addressLatitude: data.latitude,
             addressLongitude: data.longitude,
-            price: price
+            price: price,
+            status:'pending'
 
         }
 
