@@ -84,7 +84,7 @@ const Dashboard = () => {
                             <NavLink to="/">
                                 <FaHome /> Home
                             </NavLink>
-                        </li>
+                        </li> 
                     </ul>
                 )}
 

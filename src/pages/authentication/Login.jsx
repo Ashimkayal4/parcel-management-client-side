@@ -41,8 +41,17 @@ const Login = () => {
 
     const handleGoogleLogin = () => {
         googleSignIn()
-            .then(res => {
+            .then((res) => {
+
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "Login successful",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
                 setUser(res.user)
+             
 
                 const loggedInUser = res.user;
                 const userInfo = {
@@ -53,16 +62,12 @@ const Login = () => {
                 };
 
                 axiosPublic.post('/users', userInfo)
-                    .then(() => {
-                        Swal.fire({
-                            position: "top-center",
-                            icon: "success",
-                            title: "Login successful",
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        navigate(from, { replace: true });
+                    .then((res) => {
+                        console.log(res.data)
                     })
+
+                navigate(from, { replace: true });
+
             })
             .catch(err => {
                 console.log(err)

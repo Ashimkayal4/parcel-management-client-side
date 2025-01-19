@@ -18,6 +18,8 @@ import AllUsers from "../pages/DashboardPage/adminHome/AllUsers";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoutes from "./AdminRoutes";
 import UpdateParcel from "../pages/DashboardPage/userHome/UpdateParcel";
+import Payment from "../pages/DashboardPage/Payment/Payment";
+import ReactConfetti from "../pages/DashboardPage/Payment/ReactConfetti";
 
 
 
@@ -93,7 +95,16 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/update/:id',
                 element: <UpdateParcel></UpdateParcel>,
-                loader: ({ params }) => fetch(`http://localhost:5000/updateParcel/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/findParcel/${params.id}`)
+            },
+            {
+                path: '/dashboard/payment/:id',
+                element: <Payment></Payment>,
+                loader: ({ params }) => fetch(`http://localhost:5000/findParcel/${params.id}`)
+            },
+            {
+                path: '/dashboard/payment-success',
+                element:<ReactConfetti></ReactConfetti>
             }
         ]
     }

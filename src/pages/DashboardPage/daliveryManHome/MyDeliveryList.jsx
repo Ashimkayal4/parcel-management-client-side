@@ -50,17 +50,21 @@ const MyDeliveryList = () => {
     const handleDeliver = (id) => {
         Swal.fire({
             title: "Are you sure?",
-            text: "You are about to mark this delivery as delivered.",
+            text: "Do you want deliver this parcel.",
             icon: "info",
             showCancelButton: true,
             confirmButtonColor: "#28a745",
             cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, deliver it!",
+            confirmButtonText: "Yes, i want to deliver.",
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.patch(`/deliverParcel/${id}`)
                     .then(() => {
-                      
+                        Swal.fire({
+                            title: "Delivered!",
+                            text: "Your parcel has been delivered.",
+                            icon: "success"
+                        });
                         refetch();
                     });
             }
@@ -102,18 +106,28 @@ const MyDeliveryList = () => {
                                     <td className="border border-gray-300 px-4 py-2">{parcel.receiverPhone}</td>
                                     <td className="border border-gray-300 px-4 py-2 max-w-[150px] whitespace-normal break-words">{parcel.address}</td>
                                     <td className="border border-gray-300 px-4 py-2 space-y-2">
-                                        <button className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 w-full">
-                                            View Location
-                                        </button>
-                                        <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 w-full"
-                                            onClick={() => handleCancel(parcel._id)} >
-                                            Cancel
-                                        </button>
-                                        <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 w-full"
-                                            onClick={() => handleDeliver(parcel._id)}>
-                                            Deliver
-                                        </button>
+                                        {parcel.status === "Delivered" ? <>
+                                            <button className="bg-gray-500 text-white px-2 py-1 rounded w-full cursor-not-allowed" disabled>
+                                                Delivered
+                                            </button>
+                                        </> :
+                                            <>
+
+                                                <button className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 w-full">
+                                                    View Location
+                                                </button>
+                                                <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 w-full"
+                                                    onClick={() => handleCancel(parcel._id)}>
+                                                    Cancel
+                                                </button>
+                                                <button className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700 w-full"
+                                                    onClick={() => handleDeliver(parcel._id)}>
+                                                    Deliver
+                                                </button>
+                                            </>
+                                        }
                                     </td>
+
                                 </tr>
                             ))
                         }

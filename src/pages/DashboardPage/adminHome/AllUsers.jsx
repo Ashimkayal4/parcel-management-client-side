@@ -9,7 +9,7 @@ const AllUsers = () => {
     const usersPerPage = 4;
 
     // Fetch all users
-    const { data: users = [], refetch } = useQuery({
+    const { data: users = [], refetch, isLoading, isError } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
@@ -18,7 +18,7 @@ const AllUsers = () => {
     });
 
     // Fetch all parcels
-    const { data: parcels = [] } = useQuery({
+    const { data: parcels = [], isLoading: parcelsLoading, isError: parcelsError } = useQuery({
         queryKey: ['parcels'],
         queryFn: async () => {
             const res = await axiosSecure.get('/parcels');
@@ -26,9 +26,14 @@ const AllUsers = () => {
         },
     });
 
-    //  users parcels booked count
+    // Combine users and parcel counts for each user
+    const parcelCountByEmail = parcels.reduce((acc, parcel) => {
+        acc[parcel.email] = (acc[parcel.email] || 0) + 1;
+        return acc;
+    }, {});
+
     const usersWithParcels = users.map((user) => {
-        const parcelsBooked = parcels.filter((parcel) => parcel.email === user.email).length;
+        const parcelsBooked = parcelCountByEmail[user.email] || 0;
         return { ...user, parcelsBooked };
     });
 
@@ -46,16 +51,22 @@ const AllUsers = () => {
             if (result.isConfirmed) {
                 axiosSecure.patch(`users/admin/${user._id}`)
                     .then((res) => {
-                    if (res.data.modifiedCount > 0) {
-                        refetch();
+                        if (res.data.modifiedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                icon: 'success',
+                                title: `${user.name} is now an Admin.`,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                        }
+                    })
+                    .catch(() => {
                         Swal.fire({
-                            icon: 'success',
-                            title: `${user.name} is now an Admin.`,
-                            showConfirmButton: false,
-                            timer: 1500,
+                            icon: 'error',
+                            title: 'Error occurred while making the user an admin.',
                         });
-                    }
-                });
+                    });
             }
         });
     };
@@ -74,16 +85,22 @@ const AllUsers = () => {
             if (result.isConfirmed) {
                 axiosSecure.patch(`users/deliverMan/${user._id}`)
                     .then((res) => {
-                    if (res.data.modifiedCount > 0) {
-                        refetch();
+                        if (res.data.modifiedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                icon: 'success',
+                                title: `${user.name} is now a Delivery Man.`,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                        }
+                    })
+                    .catch(() => {
                         Swal.fire({
-                            icon: 'success',
-                            title: `${user.name} is now a Delivery Man.`,
-                            showConfirmButton: false,
-                            timer: 1500,
+                            icon: 'error',
+                            title: 'Error occurred while making the user a delivery man.',
                         });
-                    }
-                });
+                    });
             }
         });
     };
@@ -93,6 +110,9 @@ const AllUsers = () => {
         (currentPage - 1) * usersPerPage,
         currentPage * usersPerPage
     );
+
+    if (isLoading || parcelsLoading) return <div>Loading...</div>;
+    if (isError || parcelsError) return <div>Error loading data</div>;
 
     return (
         <div className="p-4">
@@ -111,7 +131,7 @@ const AllUsers = () => {
                         {paginatedUsers.map((user) => (
                             <tr key={user._id} className="text-center">
                                 <td className="border border-gray-300 px-4 py-2">{user.name}</td>
-                                <td className="border border-gray-300 px-4 py-2">{user.phoneNumber || 'N/A'}</td>
+                                <td className="border border-gray-300 px-4 py-2">{user.phone || 'N/A'}</td>
                                 <td className="border border-gray-300 px-4 py-2">{user.parcelsBooked}</td>
                                 <td className="border border-gray-300 px-4 py-2">
                                     {user.role === 'deliveryMen' ? (

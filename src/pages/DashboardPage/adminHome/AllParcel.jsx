@@ -8,25 +8,24 @@ const AllParcel = () => {
     const [selectedParcel, setSelectedParcel] = useState(null);
 
     // Fetch parcels data
-    const { data: parcels = [], refetch } = useQuery({
+    const { data: parcels = [], isLoading: parcelsLoading, isError: parcelsError, refetch } = useQuery({
         queryKey: ['parcels'],
         queryFn: async () => {
             const res = await axiosSecure.get('/parcels');
-            return res.data;
+            return Array.isArray(res.data) ? res.data : [];
         }
     });
 
     // Fetch delivery men data for the modal dropdown
-    const { data: deliveryMenList = [], } = useQuery({
+    const { data: deliveryMenList = [], isLoading: menLoading, isError: menError } = useQuery({
         queryKey: ['deliveryMenList'],
         queryFn: async () => {
             const res = await axiosSecure.get('/deliveryMen');
-            return res.data;
+            return Array.isArray(res.data) ? res.data : [];
         }
     });
-   
 
-    const { _id ,} = selectedParcel || {};
+    const { _id, } = selectedParcel || {};
 
     const handleSelectDeliveryMen = e => {
         e.preventDefault()
@@ -42,27 +41,34 @@ const AllParcel = () => {
             .then(() => {
                 Swal.fire({
                     title: "Are you sure?",
-                    text: "Do you want select this delivery person?",
+                    text: "Do you want to select this delivery person?",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes,I want"
+                    confirmButtonText: "Yes, I want"
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire({
                             title: "Confirmed!",
-                            text: "Delivery man assign successfully",
+                            text: "Delivery man assigned successfully",
                             icon: "success"
                         });
 
-                        refetch()
-
+                        refetch();
                         setSelectedParcel(null);
                     }
                 });
-            
             })
+    }
+
+    // Loading and error handling
+    if (parcelsLoading || menLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (parcelsError || menError) {
+        return <div>Error loading data</div>;
     }
 
     return (
@@ -86,19 +92,20 @@ const AllParcel = () => {
                             <tr key={parcel._id} className="hover:bg-gray-50">
                                 <td className="border border-gray-300 px-4 py-2">{parcel.name}</td>
                                 <td className="border border-gray-300 px-4 py-2">{parcel.phone}</td>
+                                <td className="border border-gray-300 px-4 py-2">{parcel.bookingDate}</td>
                                 <td className="border border-gray-300 px-4 py-2">{parcel.date}</td>
-                                <td className="border border-gray-300 px-4 py-2">{parcel.receiverName}</td>
                                 <td className="border border-gray-300 px-4 py-2">${parcel.price}</td>
-                                <td className={`border border-gray-300 px-4 py-2 font-semibold ${parcel.status === 'pending' ? 'text-red-500':'text-black'}`}>
+                                <td className={`border border-gray-300 px-4 py-2 font-semibold ${parcel.status === 'pending' ? 'text-red-500' : parcel.status === 'Delivered' ? 'text-green-500' : ''}`}>
                                     {parcel.status}
                                 </td>
-                                <td className="border border-gray-300 px-4 py-2">
 
-                                    <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
-                                        onClick={() => setSelectedParcel(parcel)}>
+                                <td className="border border-gray-300 px-4 py-2">
+                                    <button
+                                        className={`px-3 py-1 rounded ${parcel.status === 'Delivered' ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-700'}`}
+                                        onClick={() => setSelectedParcel(parcel)}
+                                        disabled={parcel.status === 'Delivered'}>
                                         Manage
                                     </button>
-                                 
                                 </td>
                             </tr>
                         ))}
@@ -114,8 +121,7 @@ const AllParcel = () => {
                         <p className="mb-2"><strong>Parcel ID:</strong> {selectedParcel._id}</p>
 
                         <label className="block mb-2 font-semibold">Assign Delivery Man:</label>
-                        <select name='deliveryId'
-                            className="w-full p-2 border rounded mb-4" >
+                        <select name='deliveryId' className="w-full p-2 border rounded mb-4">
                             <option>Select a delivery man</option>
                             {deliveryMenList.map((man) => (
                                 <option key={man._id} value={man._id}>
@@ -137,7 +143,7 @@ const AllParcel = () => {
                                 onClick={() => setSelectedParcel(null)}>
                                 Cancel
                             </button>
-                            <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700" >
+                            <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700">
                                 Assign
                             </button>
                         </div>

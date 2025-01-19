@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
             
         });
         return () => {
-            return unsubscribe
+            return unsubscribe()
         }
     },[axiosPublic])
     return (

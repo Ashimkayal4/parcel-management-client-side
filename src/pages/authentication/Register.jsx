@@ -26,6 +26,18 @@ const Register = () => {
         const password = form.password.value;
         const role = form.role.value;
 
+        const valid = /^(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{6,}$/;
+        if (!valid.test(password)) {
+            Swal.fire({
+                position: "top-center",
+                icon: "error",
+                title: "Must one uppercase,one lowercase and 6 letter long",
+                showConfirmButton: false,
+                timer: 2500
+            });
+            return;
+        }
+
         createUser(email, password)
             .then(res => {
                 const newUser = res.user;

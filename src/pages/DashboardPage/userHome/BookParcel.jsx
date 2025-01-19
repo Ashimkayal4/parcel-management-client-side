@@ -35,6 +35,9 @@ const BookParcel = () => {
     }, [parcelWeight]);
 
     const onSubmit = (data) => {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+
         const parcelInfo = {
             name: user.displayName,
             email: user.email,
@@ -44,6 +47,7 @@ const BookParcel = () => {
             receiverName: data.receiverName,
             receiverPhone: data.receiverPhone,
             address: data.deliveryAddress,
+            bookingDate:formattedDate,
             date: data.deliveryDate,
             addressLatitude: data.latitude,
             addressLongitude: data.longitude,
