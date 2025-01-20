@@ -19,7 +19,7 @@ Parcel Delivery System is a robust web application designed to manage the parcel
 - **Responsive Design**: Fully responsive, works seamlessly on all devices.
 - **Social Login**: Use Google login for fast registration and login.
 
-## Admin Credentials
+## Admin and Delivery Men Credentials
 
 - **Admin Username**: rupok@gmail.com
 - **Admin Password**: As117174
