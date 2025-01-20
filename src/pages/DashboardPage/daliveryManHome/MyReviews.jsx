@@ -9,7 +9,7 @@ const MyReviews = () => {
     const { user } = useAuth();
 
     // Fetch delivery men data
-    const { data: deliveryMen = [] } = useQuery({
+    const { data: deliveryMen = [],isLoading:userLoading } = useQuery({
         queryKey: ['deliveryMen'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/${user.email}`);
@@ -18,13 +18,17 @@ const MyReviews = () => {
     });
 
     // get my review
-    const { data: reviews = [] } = useQuery({
-        queryKey: ['reviews'],
+    const { data: reviews = [],isLoading } = useQuery({
+        queryKey: ['reviews',deliveryMen._id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/myReview/${deliveryMen._id}`);
             return res.data;
         },
     });
+
+    if (isLoading || userLoading) {
+        return <h1>review is loading .........</h1>
+    }
 
 
     return (
@@ -38,7 +42,7 @@ const MyReviews = () => {
                         <div key={review._id} className="border p-4 rounded shadow-lg">
                             <div className="flex items-center mb-4">
                                 <img
-                                    src={review.image || 'https://via.placeholder.com/150'}
+                                    src={review.image}
                                     alt={review.name}
                                     className="w-12 h-12 rounded-full mr-4"
                                 />

@@ -37,7 +37,7 @@ const MyDeliveryList = () => {
             confirmButtonText: "Yes, cancel it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/cancelDelivery/${id}`)
+                axiosSecure.patch(`/cancelParcel/${id}`)
                     .then(() => {
                         Swal.fire("Cancelled!", "The delivery has been cancelled.", "success");
                         refetch();

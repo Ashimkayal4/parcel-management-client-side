@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const BookParcel = () => {
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate()
-    
+
     const [price, setPrice] = useState(0);
     const { user } = useAuth();
     const {
@@ -47,12 +47,12 @@ const BookParcel = () => {
             receiverName: data.receiverName,
             receiverPhone: data.receiverPhone,
             address: data.deliveryAddress,
-            bookingDate:formattedDate,
+            bookingDate: formattedDate,
             date: data.deliveryDate,
             addressLatitude: data.latitude,
             addressLongitude: data.longitude,
             price: price,
-            status:'pending'
+            status: 'pending'
 
         }
 
@@ -65,7 +65,7 @@ const BookParcel = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-              
+
                 navigate('/dashboard/usersHome/myParcel')
             })
 

@@ -38,11 +38,15 @@ const MyBookedParcel = () => {
             name: user?.displayName,
             image: user?.photoURL,
             deliveryMenId: selectedParcel?.deliveryMenId,
+            deliveryMenName: selectedParcel?.deliveryMenName,
+            deliveryMenPhoto: selectedParcel?.deliveryMenPhoto,
             rating: formData.get('rating'),
             feedback: formData.get('feedback'),
             date: formattedDate,
             parcelId:parcelId,
         };
+
+        console.log(review)
 
         axiosSecure.post('/reviews', review)
             .then(() => {

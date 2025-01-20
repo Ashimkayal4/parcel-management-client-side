@@ -32,10 +32,22 @@ const AllParcel = () => {
         const form = e.target;
         const date = form.date.value;
         const deliveryMenId = form.deliveryId.value;
+
+        const selectedDeliveryMan = deliveryMenList.find(man => man._id === deliveryMenId);
+
+        const deliveryMenName = selectedDeliveryMan?.name;
+        const deliveryMenPhoto = selectedDeliveryMan?.photo;
+
+       
+
         const selectInfo = {
             deliveryMenId,
+            deliveryMenName,
+            deliveryMenPhoto,
             date,
         }
+
+        console.log(selectInfo)
 
         axiosSecure.patch(`/update/deliver/${_id}`, selectInfo)
             .then(() => {

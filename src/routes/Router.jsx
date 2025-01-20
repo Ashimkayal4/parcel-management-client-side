@@ -20,6 +20,7 @@ import AdminRoutes from "./AdminRoutes";
 import UpdateParcel from "../pages/DashboardPage/userHome/UpdateParcel";
 import Payment from "../pages/DashboardPage/Payment/Payment";
 import ReactConfetti from "../pages/DashboardPage/Payment/ReactConfetti";
+import ErrorElement from "../pages/HomePage/ErrorElement";
 
 
 
@@ -27,26 +28,28 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout></MainLayout>,
+        errorElement:<ErrorElement></ErrorElement>,
         children: [
             {
                 path: '/',
-                element:<Home></Home>
+                element: <Home></Home>
             },
             {
                 path: '/login',
-                element:<Login></Login>
+                element: <Login></Login>
             },
             {
                 path: '/register',
-                element:<Register></Register>
+                element: <Register></Register>
             }
         ]
     },
     {
         path: '/dashboard',
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        errorElement:<ErrorElement></ErrorElement>,
         children: [
-        
+
             // users links
             {
                 path: '/dashboard/usersHome/bookParcel',
@@ -54,22 +57,22 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/usersHome/myParcel',
-                element:<MyBookedParcel></MyBookedParcel>
+                element: <MyBookedParcel></MyBookedParcel>
             },
             {
                 path: '/dashboard/usersHome/myProfile',
-                element:<MyProfile></MyProfile>
+                element: <MyProfile></MyProfile>
             },
 
             // delivery man related links
 
             {
                 path: '/dashboard/deliveryHome/myReviews',
-                element:<MyReviews></MyReviews>
+                element: <MyReviews></MyReviews>
             },
             {
                 path: '/dashboard/deliverHome/myDeliveryList',
-                element:<MyDeliveryList></MyDeliveryList>
+                element: <MyDeliveryList></MyDeliveryList>
             },
 
             // admin related links
@@ -95,16 +98,16 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/update/:id',
                 element: <UpdateParcel></UpdateParcel>,
-                loader: ({ params }) => fetch(`http://localhost:5000/findParcel/${params.id}`)
+                loader: ({ params }) => fetch(`https://y-omega-inky.vercel.app/findParcel/${params.id}`)
             },
             {
                 path: '/dashboard/payment/:id',
                 element: <Payment></Payment>,
-                loader: ({ params }) => fetch(`http://localhost:5000/findParcel/${params.id}`)
+                loader: ({ params }) => fetch(`https://y-omega-inky.vercel.app/findParcel/${params.id}`)
             },
             {
                 path: '/dashboard/payment-success',
-                element:<ReactConfetti></ReactConfetti>
+                element: <ReactConfetti></ReactConfetti>
             }
         ]
     }

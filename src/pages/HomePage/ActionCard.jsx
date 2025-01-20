@@ -32,7 +32,7 @@ const ActionCard = () => {
     const { usersCount, parcelsCount, deliverComplete } = data;
 
     return (
-        <div className="py-16 bg-gray-100">
+        <div className="py-4 bg-white shadow-md">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {/* Action Card 1 */}
