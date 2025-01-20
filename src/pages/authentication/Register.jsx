@@ -143,7 +143,7 @@ const Register = () => {
                                 </label>
                                 <select name="role" className="input input-bordered">
                                     <option value="user">user</option>
-                                    <option value="deliveryMen">delivery Man</option>
+                                    <option value="deliveryMen">delivery Men</option>
                                 </select>
                             </div>
 

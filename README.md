@@ -23,6 +23,9 @@ Parcel Delivery System is a robust web application designed to manage the parcel
 
 - **Admin Username**: rupok@gmail.com
 - **Admin Password**: As117174
+- **Live side URL**: https://assignment-twelve-16476.web.app/
+- **DeliveryMen Username**: sakib@gmail.com
+- **DeliveryMen password**: As411868
 
 ## Technologies Used
 
