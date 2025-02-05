@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout></MainLayout>,
-        errorElement:<ErrorElement></ErrorElement>,
+        errorElement: <ErrorElement></ErrorElement>,
         children: [
             {
                 path: '/',
@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
-        errorElement:<ErrorElement></ErrorElement>,
+        errorElement: <ErrorElement></ErrorElement>,
         children: [
 
             // users links
@@ -98,12 +98,12 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/update/:id',
                 element: <UpdateParcel></UpdateParcel>,
-                loader: ({ params }) => fetch(`https://y-omega-inky.vercel.app/findParcel/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/findParcel/${params.id}`)
             },
             {
                 path: '/dashboard/payment/:id',
                 element: <Payment></Payment>,
-                loader: ({ params }) => fetch(`https://y-omega-inky.vercel.app/findParcel/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/findParcel/${params.id}`)
             },
             {
                 path: '/dashboard/payment-success',

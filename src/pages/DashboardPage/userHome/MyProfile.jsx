@@ -64,7 +64,7 @@ const MyProfile = () => {
         <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
             <h1 className="text-3xl font-bold mb-6 text-center">My Profile</h1>
             <div className="flex flex-col items-center space-y-6">
-
+               
                 <div>
                     <img
                         src={profile?.photo}

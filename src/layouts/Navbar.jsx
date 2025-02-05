@@ -33,9 +33,9 @@ const Navbar = () => {
             </div>
             <div className="flex gap-5">
                 <div>
-                    <Link to='/'><h1 className=" p-2 text-black rounded-md font-semibold">Home</h1></Link>
+                    <Link to='/'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Home</h1></Link>
                 </div>
-                <div>
+                <div className="max-sm:hidden">
                     <h1><IoNotificationsSharp /></h1>
                 </div>
                 <div>

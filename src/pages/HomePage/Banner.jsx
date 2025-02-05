@@ -4,13 +4,13 @@ import Lottie from 'lottie-react';
 
 const Banner = () => {
     return (
-        <div className="relative bg-cover bg-center h-screen flex items-center justify-center text-black">
+        <div className="relative bg-cover bg-center lg:h-screen max-sm:h-[650px] flex items-center justify-center text-black">
             <div className="absolute inset-0 pointer-events-none">
                 <Lottie
                     animationData={parcelLottie}
                     loop
                     autoplay
-                    className="w-full h-full object-cover opacity-70 transform translate-y-20"
+                    className="w-full lg:h-full object-cover opacity-70 transform translate-y-20"
                 />
             </div>
 
