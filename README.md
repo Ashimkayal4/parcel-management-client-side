@@ -54,14 +54,14 @@ Install dependencies
 ```
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file
-VITE_apiKey
-VITE_authDomain
-VITE_projectId
-VITE_storageBucket
-VITE_messagingSenderId
-VITE_appId
-VITE_stripe_key
-VITE_IMAGE_HOSTING_KEY
+-**VITE_apiKey**
+-**VITE_authDomain**
+-**VITE_projectId**
+-**VITE_storageBucket**
+-**VITE_messagingSenderId**
+-**VITE_appId**
+-**VITE_stripe_key**
+-**VITE_IMAGE_HOSTING_KEY**
 
 Start the server
 
