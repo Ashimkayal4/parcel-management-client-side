@@ -33,41 +33,41 @@ Parcel Delivery System is a robust web application designed to manage the parcel
 - **Charts**: React Apex Charts
 - **Maps**: React MapGL or React Leaflet
 
-## Dependencies
-  "dependencies": {
-    "@stripe/react-stripe-js": "^3.1.1",
-    "@stripe/stripe-js": "^5.5.0",
-    "@tanstack/react-query": "^5.64.1",
-    "axios": "^1.7.9",
-    "firebase": "^11.1.0",
-    "localforage": "^1.10.0",
-    "lottie-react": "^2.4.0",
-    "match-sorter": "^8.0.0",
-    "react": "^18.3.1",
-    "react-apexcharts": "^1.7.0",
-    "react-confetti-explosion": "^2.1.2",
-    "react-dom": "^18.3.1",
-    "react-hook-form": "^7.54.2",
-    "react-icons": "^5.4.0",
-    "react-router-dom": "^7.1.1",
-    "sort-by": "^1.2.0",
-    "sweetalert2": "^11.15.10"
-  }
+## Run Locally
 
-## Step-by-Step Guide to Run Locally
-**1.Clone the repository:**
+Clone the project
+
+```bash
   git clone https://github.com/Ashimkayal4/parcel-management-client-side.git
+```
+
+Go to the project directory
+
+```bash
   cd parcel-management-client-side
+```
 
-**2.Install dependencies:**
+Install dependencies
+
+```bash
   npm install
+```
+## Environment Variables
+To run this project, you will need to add the following environment variables to your .env file
+VITE_apiKey
+VITE_authDomain
+VITE_projectId
+VITE_storageBucket
+VITE_messagingSenderId
+VITE_appId
+VITE_stripe_key
+VITE_IMAGE_HOSTING_KEY
 
-**3.Set up environment variables:** Create a .env file in the root directory and configure the following:
-REACT_APP_FIREBASE_API_KEY
-REACT_APP_STRIPE_PUBLIC_KEY
+Start the server
 
-**4.Run the application:**
+```bash
   npm run dev
+```
 
 
 
