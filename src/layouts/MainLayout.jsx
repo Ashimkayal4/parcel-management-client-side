@@ -8,7 +8,7 @@ const MainLayout = () => {
     const noHeaderFooter = location.pathname.includes('login') || location.pathname.includes('register');
     return (
         <div>
-            <section className="w-11/12 mx-auto">
+            <section>
                 {noHeaderFooter || <Navbar></Navbar>}
                 
                 <Outlet></Outlet>

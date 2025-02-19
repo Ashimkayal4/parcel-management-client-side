@@ -26,7 +26,7 @@ const Navbar = () => {
     }
     return (
 
-        <div className="navbar fixed z-10 bg-opacity-30 w-11/12 bg-base-100 justify-between">
+        <div className="navbar fixed z-10 bg-opacity-30 lg:px-7 bg-base-100 justify-between">
             <div className="">
                 <img className="w-10 h-10 rounded-full" src={logo} alt="" />
                 <h1 className="text-xl ml-2">DropZone</h1>
@@ -35,13 +35,17 @@ const Navbar = () => {
                 <div>
                     <Link to='/'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Home</h1></Link>
                 </div>
-                <div className="max-sm:hidden">
-                    <h1><IoNotificationsSharp /></h1>
+                <div>
+                    <Link to='/'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Pricing</h1></Link>
                 </div>
+                <div>
+                    <Link to='/'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Contact Us</h1></Link>
+                </div>
+               
                 <div>
 
                     {
-                        !user && <Link to="/login"><button className="btn">Login</button></Link>
+                        !user && <Link to="/login"><button className="btn btn-outline">Login</button></Link>
                     }
 
                 </div>
