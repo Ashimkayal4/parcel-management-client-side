@@ -36,7 +36,7 @@ const Navbar = () => {
                     <Link to='/'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Home</h1></Link>
                 </div>
                 <div>
-                    <Link to='/'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Pricing</h1></Link>
+                    <Link to='/pricing'><button className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Pricing</button></Link>
                 </div>
                 <div>
                     <Link to='/'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Contact Us</h1></Link>

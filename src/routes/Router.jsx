@@ -21,6 +21,7 @@ import UpdateParcel from "../pages/DashboardPage/userHome/UpdateParcel";
 import Payment from "../pages/DashboardPage/Payment/Payment";
 import ReactConfetti from "../pages/DashboardPage/Payment/ReactConfetti";
 import ErrorElement from "../pages/HomePage/ErrorElement";
+import PricingPage from "../pages/Pricing/PricingPage";
 
 
 
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register></Register>
+            },
+            {
+                path: '/pricing',
+                element: <PricingPage></PricingPage>
             }
         ]
     },
