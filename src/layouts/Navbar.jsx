@@ -40,6 +40,13 @@ const Navbar = () => {
                 <div>
                     <Link to='/contact'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Contact Us</h1></Link>
                 </div>
+                <div>
+                    {
+                        user && <div>
+                            <Link to='/track'><button className="p-2 max-sm:hidden text-black rounded-md font-semibold">Track</button></Link>
+                        </div>
+                  }
+                </div>
                
                 <div>
 

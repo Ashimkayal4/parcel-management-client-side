@@ -23,6 +23,7 @@ import ReactConfetti from "../pages/DashboardPage/Payment/ReactConfetti";
 import ErrorElement from "../pages/HomePage/ErrorElement";
 import PricingPage from "../pages/Pricing/PricingPage";
 import ContactUs from "../pages/ContactUs/ContactUs";
+import TrackingPage from "../pages/Track/TrackingPage";
 
 
 
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
             {
                 path: '/contact',
                 element:<ContactUs></ContactUs>
+            },
+            {
+                path: '/track',
+                element:<PrivateRoute><TrackingPage></TrackingPage></PrivateRoute>
             }
         ]
     },
