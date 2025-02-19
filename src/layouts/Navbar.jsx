@@ -47,6 +47,13 @@ const Navbar = () => {
                         </div>
                   }
                 </div>
+                <div>
+                    {
+                        user && <div>
+                            <Link to='/helpCenter'><button className="p-2 max-sm:hidden text-black rounded-md font-semibold">FAQHelpCenter</button></Link>
+                        </div>
+                  }
+                </div>
                
                 <div>
 

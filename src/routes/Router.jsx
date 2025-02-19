@@ -24,6 +24,7 @@ import ErrorElement from "../pages/HomePage/ErrorElement";
 import PricingPage from "../pages/Pricing/PricingPage";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import TrackingPage from "../pages/Track/TrackingPage";
+import FAQHelpCenter from "../pages/Help/FAQHelpCenter";
 
 
 
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
             {
                 path: '/track',
                 element:<PrivateRoute><TrackingPage></TrackingPage></PrivateRoute>
+            },
+            {
+                path: '/helpCenter',
+                element:<PrivateRoute><FAQHelpCenter></FAQHelpCenter></PrivateRoute>
             }
         ]
     },
