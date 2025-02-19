@@ -3,7 +3,6 @@ import logo from '../assets/images.jpg'
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
-import { IoNotificationsSharp } from "react-icons/io5";
 
 const Navbar = () => {
     const { user, signOutUser, setUser } = useContext(AuthContext);
@@ -39,7 +38,7 @@ const Navbar = () => {
                     <Link to='/pricing'><button className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Pricing</button></Link>
                 </div>
                 <div>
-                    <Link to='/'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Contact Us</h1></Link>
+                    <Link to='/contact'><h1 className=" p-2 max-sm:hidden text-black rounded-md font-semibold">Contact Us</h1></Link>
                 </div>
                
                 <div>

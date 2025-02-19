@@ -1,7 +1,7 @@
 
 const PricingPage = () => {
     return (
-        <div className=" bg-gray-100 pt-20 px-4">
+        <div className=" bg-gray-100 py-20 px-4">
             <h1 className="text-4xl font-bold text-center mb-10">Pricing Plans</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 {/* Basic Plan */}

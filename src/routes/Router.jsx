@@ -22,6 +22,7 @@ import Payment from "../pages/DashboardPage/Payment/Payment";
 import ReactConfetti from "../pages/DashboardPage/Payment/ReactConfetti";
 import ErrorElement from "../pages/HomePage/ErrorElement";
 import PricingPage from "../pages/Pricing/PricingPage";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 
 
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
             {
                 path: '/pricing',
                 element: <PricingPage></PricingPage>
+            },
+            {
+                path: '/contact',
+                element:<ContactUs></ContactUs>
             }
         ]
     },
